@@ -1,0 +1,15 @@
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/bin/Debug/net8.0/Day2
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/bin/Debug/net8.0/Day2.deps.json
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/bin/Debug/net8.0/Day2.runtimeconfig.json
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/bin/Debug/net8.0/Day2.dll
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/bin/Debug/net8.0/Day2.pdb
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.GeneratedMSBuildEditorConfig.editorconfig
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.AssemblyInfoInputs.cache
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.AssemblyInfo.cs
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.csproj.CoreCompileInputs.cache
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.sourcelink.json
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.dll
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/refint/Day2.dll
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.pdb
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/Day2.genruntimeconfig.cache
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/Task2/Day2/obj/Debug/net8.0/ref/Day2.dll
