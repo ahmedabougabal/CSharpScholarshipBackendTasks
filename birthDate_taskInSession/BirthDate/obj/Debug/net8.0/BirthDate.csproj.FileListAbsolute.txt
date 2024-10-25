@@ -1,0 +1,15 @@
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/bin/Debug/net8.0/BirthDate
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/bin/Debug/net8.0/BirthDate.deps.json
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/bin/Debug/net8.0/BirthDate.runtimeconfig.json
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/bin/Debug/net8.0/BirthDate.dll
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/bin/Debug/net8.0/BirthDate.pdb
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.GeneratedMSBuildEditorConfig.editorconfig
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.AssemblyInfoInputs.cache
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.AssemblyInfo.cs
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.csproj.CoreCompileInputs.cache
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.sourcelink.json
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.dll
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/refint/BirthDate.dll
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.pdb
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/BirthDate.genruntimeconfig.cache
+/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/birthDate_taskInSession/BirthDate/obj/Debug/net8.0/ref/BirthDate.dll
