@@ -1,0 +1,57 @@
+.
+├── Atm.cs
+├── Atm.csproj
+├── bin
+│   └── Debug
+│       └── net8.0
+│           ├── Atm
+│           ├── Atm.deps.json
+│           ├── Atm.dll
+│           ├── Atm.pdb
+│           └── Atm.runtimeconfig.json
+├── Enums
+│   ├── OperationType.cs
+│   └── UserCategory.cs
+├── Models
+│   ├── PendingTransfer.cs
+│   ├── Transaction.cs
+│   ├── TransactionInfo.cs
+│   └── User.cs
+├── obj
+│   ├── Atm.csproj.nuget.dgspec.json
+│   ├── Atm.csproj.nuget.g.props
+│   ├── Atm.csproj.nuget.g.targets
+│   ├── Debug
+│   │   └── net8.0
+│   │       ├── apphost
+│   │       ├── Atm.AssemblyInfo.cs
+│   │       ├── Atm.AssemblyInfoInputs.cache
+│   │       ├── Atm.assets.cache
+│   │       ├── Atm.csproj.CoreCompileInputs.cache
+│   │       ├── Atm.csproj.FileListAbsolute.txt
+│   │       ├── Atm.dll
+│   │       ├── Atm.GeneratedMSBuildEditorConfig.editorconfig
+│   │       ├── Atm.genruntimeconfig.cache
+│   │       ├── Atm.GlobalUsings.g.cs
+│   │       ├── Atm.pdb
+│   │       ├── Atm.sourcelink.json
+│   │       ├── ref
+│   │       │   └── Atm.dll
+│   │       └── refint
+│   │           └── Atm.dll
+│   ├── project.assets.json
+│   ├── project.nuget.cache
+│   ├── project.packagespec.json
+│   ├── rider.project.model.nuget.info
+│   └── rider.project.restore.info
+├── Program.cs
+├── Services
+│   ├── ITransactionLogger.cs
+│   ├── ITransferService.cs
+│   ├── IUserService.cs
+│   ├── TransactionLogger.cs
+│   ├── TransferService.cs
+│   └── UserService.cs
+└── tree.txt
+
+12 directories, 43 files

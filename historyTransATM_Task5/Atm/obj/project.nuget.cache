@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "UWDUtrotCkBjsaG4XT2MnmXL0jMuppg5Cttb2m1Vz4kYemi/kvYRwkdFiBfyvqCU5h6z6grk8NjQfLmR5DozUQ==",
+  "success": true,
+  "projectFilePath": "/home/abougabal/cSharpCodingBootcamp/CSharpScholarshipBackendTasks/historyTransATM_Task5/Atm/Atm.csproj",
+  "expectedPackageFiles": [
+    "/home/abougabal/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.1/microsoft.extensions.dependencyinjection.8.0.1.nupkg.sha512",
+    "/home/abougabal/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
