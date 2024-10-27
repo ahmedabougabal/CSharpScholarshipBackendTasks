@@ -5,7 +5,7 @@ using ATMApp.Domain.Enums;
 using ATMApp.UI;
 namespace ATMApp.App
 {
-    public class ATMApp : IUserLogin
+    public class ATMApp : IUserLogin, IUserAccountActions
     {
         private List<UserAccount> userAccountlist;
         private UserAccount SelectedAcccount;
@@ -27,11 +27,11 @@ namespace ATMApp.App
             userAccountlist = new List<UserAccount>
             {
                 new UserAccount{Id = 1, FullName="Ahmed Abou Gabal", AccountNumber=123456, CardNumber = 321321 , CardPin=241023,
-                AccountBalance= 10000, isLocked=false},
+                AccountBalance= 10000m, isLocked=false},
                 new UserAccount{Id = 2, FullName="Mr X", AccountNumber=12345678, CardNumber = 32132132 , CardPin=241023,
-                AccountBalance= 5000, isLocked=false},
+                AccountBalance= 5000m, isLocked=false},
                 new UserAccount{Id = 3, FullName="Mrs Y", AccountNumber=123456789, CardNumber = 321321321 , CardPin=241023,
-                AccountBalance= 700, isLocked=true}
+                AccountBalance= 700m, isLocked=true}
             };
 
         }
@@ -78,14 +78,14 @@ namespace ATMApp.App
 
                 }
             }
-           
+
         }
         private void ProcessMenuOption()
         {
             switch (Validator.Convert<int>("an option"))
             {
                 case (int)AppMenu.CheckBalance:
-                    Console.WriteLine("Checking account balance...");
+                    CheckBalance();
                     break;
                 case (int)AppMenu.PlaceDeposit:
                     Console.WriteLine("Placing Deposit...");
@@ -107,12 +107,58 @@ namespace ATMApp.App
                 default:
                     Utility.PrintMessage("Invalid option.", false);
                     break;
-            
+
 
             }
         }
-       
 
+        public void CheckBalance()
+        {
+            Utility.PrintMessage($"your account balance is: {Utility.FormatAmount(SelectedAcccount.AccountBalance)}");
+        }
 
+        public void PlaceDeposit()
+        {
+            Console.WriteLine("\n Only multiples of 500 and 1000 are allowed\n");
+            var transaction_amount = Validator.Convert<int>($"amount {AppScreen.Cur}");
+
+            // simulate counting 
+            Console.WriteLine("\n Checking and Counting bank notes.");
+            Utility.PrintDotAnimation();
+            Console.WriteLine("");
+
+            // some guard clauses
+            if (transaction_amount > 0) {
+                Utility.PrintMessage("Amount needs to be greater than 0, try again", false);
+                return;
+            }
+            if (transaction_amount % 500 != 0) {
+                Utility.PrintMessage("Enter Deposit Amount in multiples of 500 or 1000, try again", false);
+                return;
+            }
+            if (PreviewBankNotesCount(transaction_amount)==false)
+            {
+                Utility.PrintMessage($"You have cancelled your action");
+            }
+        }
+
+        public void MakeWithdrawal()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool PreviewBankNotesCount(int amount)
+        {
+            int thousandNotesCount = amount / 1000;
+            int fiveHundredNotesCount = (amount % 1000) / 500;
+            Console.WriteLine("\n Summary");
+            Console.WriteLine("------------");
+            Console.WriteLine($"{AppScreen.Cur}1000 X {thousandNotesCount} = {1000 * thousandNotesCount}");
+            Console.WriteLine($"{AppScreen.Cur}500 X {fiveHundredNotesCount} = {500 * fiveHundredNotesCount}");
+            Console.WriteLine($"total amount : {Utility.FormatAmount(amount)}\n \n");
+
+            int opt = Validator.Convert<int>("1 to Confirm");
+            return opt.Equals(1);
+        }
     }
 }
