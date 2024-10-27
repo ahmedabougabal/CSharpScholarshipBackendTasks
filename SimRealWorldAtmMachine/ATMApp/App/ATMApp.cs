@@ -1,6 +1,7 @@
 ﻿using System;
 using ATMApp.Domain.Entities;
 using ATMApp.Domain.Entities.Interfaces;
+using ATMApp.Domain.Enums;
 using ATMApp.UI;
 namespace ATMApp.App
 {
@@ -8,6 +9,18 @@ namespace ATMApp.App
     {
         private List<UserAccount> userAccountlist;
         private UserAccount SelectedAcccount;
+
+        public void Run()
+        {
+            AppScreen.Welcome();
+            CheckUserCardNumAndPassword();
+            AppScreen.WelcomeCustomer(SelectedAcccount.FullName);
+            AppScreen.DisplayAppMenu();
+            ProcessMenuOption();
+
+
+        }
+
 
         public void InitializeData()
         {
@@ -67,11 +80,37 @@ namespace ATMApp.App
             }
            
         }
-        public void Welcome() {
+        private void ProcessMenuOption()
+        {
+            switch (Validator.Convert<int>("an option"))
+            {
+                case (int)AppMenu.CheckBalance:
+                    Console.WriteLine("Checking account balance...");
+                    break;
+                case (int)AppMenu.PlaceDeposit:
+                    Console.WriteLine("Placing Deposit...");
+                    break;
+                case (int)AppMenu.MakeWithdrawal:
+                    Console.WriteLine("Making WithDrawal...");
+                    break;
+                case (int)AppMenu.InternalTransfer:
+                    Console.WriteLine("Making Transfer...");
+                    break;
+                case (int)AppMenu.ViewTransactions:
+                    Console.WriteLine("Viewing Transactions...");
+                    break;
+                case (int)AppMenu.Logout:
+                    AppScreen.LogOutProgress();
+                    Utility.PrintMessage("you have succesfully logged out, please collect your ATM card");
+                    Run();
+                    break;
+                default:
+                    Utility.PrintMessage("Invalid option.", false);
+                    break;
+            
 
-            Console.WriteLine($"Welcome back, {SelectedAcccount.FullName}");
-                
-                }
+            }
+        }
        
 
 
