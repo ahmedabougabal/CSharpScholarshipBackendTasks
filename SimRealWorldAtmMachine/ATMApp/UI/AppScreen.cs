@@ -47,5 +47,27 @@ namespace ATMApp.UI
         }
 
 
+    internal static void WelcomeCustomer(string fullName)
+    {
+
+        Console.WriteLine($"Welcome back, {fullName}");
+    }
+        internal static void DisplayAppMenu() 
+        {
+            Console.Clear();
+            Console.WriteLine("------------My App Menu------------");
+            Console.WriteLine(":                                  :");
+            Console.WriteLine("1. Account Balance               :");
+            Console.WriteLine("2. Cash Deposit               :");
+            Console.WriteLine("3. Withdrawal               :");
+            Console.WriteLine("4. Transfer               :");
+            Console.WriteLine("5. Transactions               :");
+            Console.WriteLine("6. LogOut               :");
+        }
+        internal static void LogOutProgress() {
+            Console.WriteLine("thanks for using my ATM app");
+            Utility.PrintDotAnimation();
+            Console.Clear();
+        }
     }
 }
