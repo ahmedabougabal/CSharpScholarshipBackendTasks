@@ -52,17 +52,20 @@ namespace ATMApp.App
                             }
                         }
                     }
+                    if (isCorrectLogin == false)
+                    {
+                        Utility.PrintMessage("\n invalid CardNumber or CardPIN", false);
+                        SelectedAcccount.isLocked = SelectedAcccount.TotalLogin == 3;
+                        if (SelectedAcccount.isLocked)
+                        {
+                            AppScreen.PrintLockScreen();
+                        }
+                    }
+                    Console.Clear();
 
                 }
             }
-            if (isCorrectLogin == false) {
-                Utility.PrintMessage("\n invalid card number", false);
-                SelectedAcccount.isLocked = SelectedAcccount.TotalLogin == 3;
-                if (SelectedAcccount.isLocked) { 
-                    AppScreen.PrintLockScreen();
-                }
-            }
-            Console.Clear();
+           
         }
         public void Welcome() {
 
