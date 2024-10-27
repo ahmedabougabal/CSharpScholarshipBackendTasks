@@ -9,6 +9,8 @@ namespace ATMApp.UI
 {
     public static class AppScreen
     {
+        internal const string Cur = "$ ";
+
         internal static void Welcome()
         {
 
