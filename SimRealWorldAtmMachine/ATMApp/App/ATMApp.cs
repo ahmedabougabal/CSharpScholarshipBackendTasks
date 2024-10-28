@@ -5,10 +5,11 @@ using ATMApp.Domain.Enums;
 using ATMApp.UI;
 namespace ATMApp.App
 {
-    public class ATMApp : IUserLogin, IUserAccountActions
+    public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
     {
         private List<UserAccount> userAccountlist;
         private UserAccount SelectedAcccount;
+        private List<Transaction> _ListOfTransactions;
 
         public void Run()
         {
@@ -33,6 +34,7 @@ namespace ATMApp.App
                 new UserAccount{Id = 3, FullName="Mrs Y", AccountNumber=123456789, CardNumber = 321321321 , CardPin=241023,
                 AccountBalance= 700m, isLocked=true}
             };
+            _ListOfTransactions = new List<Transaction>();
 
         }
         public void CheckUserCardNumAndPassword()
@@ -88,7 +90,7 @@ namespace ATMApp.App
                     CheckBalance();
                     break;
                 case (int)AppMenu.PlaceDeposit:
-                    Console.WriteLine("Placing Deposit...");
+                    PlaceDeposit();
                     break;
                 case (int)AppMenu.MakeWithdrawal:
                     Console.WriteLine("Making WithDrawal...");
@@ -128,7 +130,7 @@ namespace ATMApp.App
             Console.WriteLine("");
 
             // some guard clauses
-            if (transaction_amount > 0) {
+            if (transaction_amount < 0) {
                 Utility.PrintMessage("Amount needs to be greater than 0, try again", false);
                 return;
             }
@@ -138,8 +140,17 @@ namespace ATMApp.App
             }
             if (PreviewBankNotesCount(transaction_amount)==false)
             {
-                Utility.PrintMessage($"You have cancelled your action");
+                Utility.PrintMessage($"You have cancelled your action", false);
+                return;
             }
+            // bind transaction details to transaction objects
+            InsertTransaction(SelectedAcccount.Id, TransactionType.Deposit, transaction_amount, "");
+
+            // update account balance 
+            SelectedAcccount.AccountBalance += transaction_amount;
+
+            // print success message to the screen
+            Utility.PrintMessage($"Your Deposit of {Utility.FormatAmount(transaction_amount)} was Successful.",true);
         }
 
         public void MakeWithdrawal()
@@ -159,6 +170,28 @@ namespace ATMApp.App
 
             int opt = Validator.Convert<int>("1 to Confirm");
             return opt.Equals(1);
+        }
+
+        public void InsertTransaction(long _UserBankAccountID, TransactionType _TransType, decimal _TransAmount, string _Description)
+        {
+            // create a new transaction object
+            var transaction = new Transaction()
+            {
+                TransactionID = Utility.GetTransactionID(),
+                UserBankAccountID = _UserBankAccountID,
+                TransactionDate = DateTime.Now,
+                TransactionType = _TransType,
+                TransactionAmount = _TransAmount,
+                Description = _Description
+            };
+            // add transaction object to list 
+            _ListOfTransactions.Add(transaction);
+
+        }
+
+        public void ViewTransaction()
+        {
+            throw new NotImplementedException();
         }
     }
 }

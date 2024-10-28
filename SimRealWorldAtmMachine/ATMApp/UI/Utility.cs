@@ -10,6 +10,7 @@ namespace ATMApp.UI
 {
     public static class Utility
     {
+        private static long trans_ID;
         private static CultureInfo culture = new CultureInfo("en-US");
         public static string GetSecretInput(string prompt)
         {
@@ -92,5 +93,12 @@ namespace ATMApp.UI
         public static string FormatAmount(decimal amount) {
             return String.Format(culture, "{0:C2}", amount);
         } 
+        public static long GetTransactionID()
+        {
+            return ++trans_ID;
+        }
+
+
+
     }
 }
