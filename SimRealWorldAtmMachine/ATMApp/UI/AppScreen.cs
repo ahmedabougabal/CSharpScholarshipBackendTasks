@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ATMApp.UI
 {
-    public static class AppScreen
+    public class AppScreen
     {
         internal const string Cur = "$ ";
 
@@ -115,6 +115,14 @@ namespace ATMApp.UI
                     return -1;
                     break;
             }
+        }
+        internal InternalTransfer InternalTransferForm()
+        {
+            var InternalTransfer = new InternalTransfer();
+            InternalTransfer.RecipientBankAccountNumber = Validator.Convert<long>("recipient's account number"); ;
+            InternalTransfer.TransferAmount = Validator.Convert<decimal>($"amount{Cur}");
+            InternalTransfer.RecipientBankAccountName = Utility.GetuserInput("recipient name");
+            return InternalTransfer;
         }
     }
 }
