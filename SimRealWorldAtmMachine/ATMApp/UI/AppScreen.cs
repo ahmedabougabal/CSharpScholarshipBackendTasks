@@ -1,6 +1,7 @@
 ﻿using ATMApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,50 @@ namespace ATMApp.UI
             Console.WriteLine("thanks for using my ATM app");
             Utility.PrintDotAnimation();
             Console.Clear();
+        }
+        internal static int SelectAmount() {
+            Console.WriteLine("");
+            Console.WriteLine($":1.{Cur}500         5.{Cur}10,000");
+            Console.WriteLine($":2.{Cur}1000         6.{Cur}15,000");
+            Console.WriteLine($":3.{Cur}2000         7. {Cur}20,000");
+            Console.WriteLine($":4.{Cur}5000         8. {Cur}40,000");
+            Console.WriteLine($":0.other");
+            Console.WriteLine("");
+            int selectedAmount = Validator.Convert<int>("option: ");
+
+            switch (selectedAmount) { 
+                case 1:
+                    return 500;
+                    break;
+                case 2:
+                    return 1000;
+                    break;
+                case 3:
+                    return 2000;
+                    break;
+                case 4:
+                    return 5000;
+                    break;
+                case 5:
+                    return 10000;
+                    break;
+                case 6:
+                    return 15000;
+                    break;
+                case 7:
+                    return 20000;
+                    break;
+                case 8:
+                    return 40000;
+                    break;
+                case 0:
+                    return 0;
+                    break;
+                default:
+                    Utility.PrintMessage("invalid input. try again");
+                    return -1;
+                    break;
+            }
         }
     }
 }

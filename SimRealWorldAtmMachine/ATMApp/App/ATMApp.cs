@@ -10,6 +10,7 @@ namespace ATMApp.App
         private List<UserAccount> userAccountlist;
         private UserAccount SelectedAcccount;
         private List<Transaction> _ListOfTransactions;
+        private const decimal minimumKeptAmount=500;
 
         public void Run()
         {
@@ -93,7 +94,7 @@ namespace ATMApp.App
                     PlaceDeposit();
                     break;
                 case (int)AppMenu.MakeWithdrawal:
-                    Console.WriteLine("Making WithDrawal...");
+                    MakeWithdrawal();
                     break;
                 case (int)AppMenu.InternalTransfer:
                     Console.WriteLine("Making Transfer...");
@@ -155,7 +156,50 @@ namespace ATMApp.App
 
         public void MakeWithdrawal()
         {
-            throw new NotImplementedException();
+            var transactionAmount = 0;
+            int selectedAmount = AppScreen.SelectAmount() ;
+            if (selectedAmount == -1)
+            {
+                Utility.PrintMessage("invalid input buddy.", false);
+                return;
+            }
+            else if (selectedAmount != 0)
+            {
+                transactionAmount = selectedAmount;
+
+            }
+            else {
+                transactionAmount = Validator.Convert<int>($"amount {AppScreen.Cur}");
+
+            }
+            //input  validation 
+            if (transactionAmount <= 0) {
+                Utility.PrintMessage("invalid amount, only amounts greater than zero are valid", false);
+                return;
+            }
+            if (transactionAmount % 500 != 0) {
+
+                Utility.PrintMessage("you can only withdraw amount of 500 and 1000, try again");
+                return;
+            }
+            // business logic validations
+            if(transactionAmount > SelectedAcccount.AccountBalance)
+            {
+                Utility.PrintMessage("withdraw failed, your balance is not sufficient for the input"+
+                    $" {Utility.FormatAmount(transactionAmount)}", false);
+                return ;
+            }
+            if((SelectedAcccount.AccountBalance- transactionAmount) < minimumKeptAmount)
+            {
+                Utility.PrintMessage($"withdrawal failed, your account needs to have a minimum {Utility.FormatAmount(minimumKeptAmount)}",false);
+                return ;
+            }
+            // bind withdrawal to transaction objects
+            InsertTransaction(SelectedAcccount.Id, TransactionType.Withdrawal, -transactionAmount,"");
+            // update account balance 
+            SelectedAcccount.AccountBalance -= transactionAmount;
+            // success message 
+            Utility.PrintMessage($"you have successfully withdrawn" + $" {Utility.FormatAmount(transactionAmount)}", true);
         }
 
         private bool PreviewBankNotesCount(int amount)
