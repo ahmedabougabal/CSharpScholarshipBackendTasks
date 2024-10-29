@@ -3,6 +3,7 @@ using ATMApp.Domain.Entities;
 using ATMApp.Domain.Entities.Interfaces;
 using ATMApp.Domain.Enums;
 using ATMApp.UI;
+using ConsoleTables;
 namespace ATMApp.App
 {
     public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
@@ -25,10 +26,11 @@ namespace ATMApp.App
             AppScreen.Welcome();
             CheckUserCardNumAndPassword();
             AppScreen.WelcomeCustomer(SelectedAcccount.FullName);
-            AppScreen.DisplayAppMenu();
-            ProcessMenuOption();
-
-
+            while (true)
+            {
+                AppScreen.DisplayAppMenu();
+                ProcessMenuOption();
+            }
         }
 
 
@@ -46,7 +48,7 @@ namespace ATMApp.App
             _ListOfTransactions = new List<Transaction>();
 
         }
-        public void CheckUserCardNumAndPassword()
+        public void CheckUserCardNumAndPassword() 
         {
             // check for credentials against the predefined list database
             bool isCorrectLogin = false;
@@ -109,7 +111,7 @@ namespace ATMApp.App
                     ProcessInternalTransfer(InternalTransfer);
                     break;
                 case (int)AppMenu.ViewTransactions:
-                    Console.WriteLine("Viewing Transactions...");
+                    ViewTransaction();
                     break;
                 case (int)AppMenu.Logout:
                     AppScreen.LogOutProgress();
@@ -293,7 +295,24 @@ namespace ATMApp.App
 
         public void ViewTransaction()
         {
-            throw new NotImplementedException();
+            var filteredTransaction = _ListOfTransactions.Where(t=> t.UserBankAccountID == SelectedAcccount.Id).ToList();
+            // check if there is a transaction
+            if(filteredTransaction.Count <= 0)
+            {
+                Utility.PrintMessage("you have no transactions yet", true); 
+            }
+            else
+            {
+                var table = new ConsoleTable("ID", "Transaction Date", "Type", "Descriptions", "Amount " + AppScreen.Cur);
+                foreach(var transaction in filteredTransaction)
+                {
+                    table.AddRow(transaction.TransactionID, transaction.TransactionDate
+                        , transaction.TransactionType, transaction.Description, transaction.TransactionAmount);
+                }
+                table.Options.EnableCount = false;
+                table.Write();
+                Utility.PrintMessage($"you have {filteredTransaction.Count} transaction(s).", true);
+            }
         }
     }
 }
