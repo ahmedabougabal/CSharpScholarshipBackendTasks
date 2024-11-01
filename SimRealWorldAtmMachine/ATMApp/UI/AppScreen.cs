@@ -55,7 +55,7 @@ namespace ATMApp.UI
 
         Console.WriteLine($"Welcome back, {fullName}");
     }
-        internal static void DisplayAppMenu() 
+        internal static void DisplayAppMenu()
         {
             Console.Clear();
             Console.WriteLine("------------My App Menu------------");
@@ -65,7 +65,8 @@ namespace ATMApp.UI
             Console.WriteLine("3. Withdrawal               :");
             Console.WriteLine("4. Transfer               :");
             Console.WriteLine("5. Transactions               :");
-            Console.WriteLine("6. LogOut               :");
+            Console.WriteLine("6. Pending Transfers               :");  
+            Console.WriteLine("7. LogOut               :");
         }
         internal static void LogOutProgress() {
             Console.WriteLine("thanks for using my ATM app");

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// 5. Modify AppMenu.cs to add new menu option
 namespace ATMApp.Domain.Enums
 {
     public enum AppMenu
@@ -12,7 +13,8 @@ namespace ATMApp.Domain.Enums
         PlaceDeposit,
         MakeWithdrawal,
         InternalTransfer,
-        ViewTransactions, 
+        ViewTransactions,
+        ViewPendingTransfers,  
         Logout
     }
 }
