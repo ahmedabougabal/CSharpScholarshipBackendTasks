@@ -48,6 +48,25 @@ namespace movieReservationSystem.Controllers
             return CreatedAtRoute("GetMovie", new { id = movie.Id.ToString() }, movie);
         }
 
+        // POST: api/movie/bulk
+        [HttpPost("bulk")]
+        public ActionResult<List<Movie>> CreateBulk([FromBody] List<Movie> movies)
+        {
+            if (movies == null || movies.Count == 0)
+            {
+                return BadRequest("No movies provided.");
+            }
+
+            var createdMovies = new List<Movie>();
+            foreach (var movie in movies)
+            {
+                var createdMovie = _movieService.AddMovie(movie);
+                createdMovies.Add(createdMovie);
+            }
+
+            return Ok(createdMovies);
+        }
+
         // PUT: api/movie/{id}
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Movie movieIn)
