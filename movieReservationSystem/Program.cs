@@ -73,7 +73,7 @@ namespace movieReservationSystem
                 });
             }
 
-            // app.UseHttpsRedirection(); since i test locally then no need for HTTPS redirection
+            // app.UseHttpsRedirection(); disabled, since i test locally then no need for HTTPS redirection
 
             app.UseCors("AllowAllOrigins");
 
