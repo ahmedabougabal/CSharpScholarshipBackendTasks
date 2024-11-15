@@ -29,7 +29,14 @@ namespace movieReservationSystem
             // Configure MongoDB
             var configuration = builder.Configuration;
             var mongoDbSettings = configuration.GetSection("MongoDb").Get<MongoDbSettings>();
-            builder.Services.AddSingleton(new MongoDbContext(mongoDbSettings.ConnectionString!, mongoDbSettings.DatabaseName!));
+            if (mongoDbSettings?.ConnectionString != null && mongoDbSettings.DatabaseName != null)
+            {
+                builder.Services.AddSingleton(new MongoDbContext(mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName));
+            }
+            else
+            {
+                throw new System.Exception("MongoDB settings are not configured correctly.");
+            }
 
             // Register repositories
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
@@ -41,6 +48,18 @@ namespace movieReservationSystem
             builder.Services.AddScoped<ReservationService>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<AuthService>();
+
+            // this is CORS config for testing locally 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
 
             var app = builder.Build();
 
@@ -54,7 +73,9 @@ namespace movieReservationSystem
                 });
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection(); since i test locally then no need for HTTPS redirection
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseAuthorization();
 
