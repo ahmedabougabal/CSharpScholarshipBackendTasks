@@ -24,6 +24,9 @@ namespace movieReservationSystem.Repositories
         public User GetUserByUsernameAndPassword(string username, string password) =>
             _users.Find<User>(user => user.Username == username && user.Password == password).FirstOrDefault();
 
+        public bool UsernameExists(string username) =>
+            _users.Find<User>(user => user.Username == username).Any();
+
         public User AddUser(User user)
         {
             _users.InsertOne(user);

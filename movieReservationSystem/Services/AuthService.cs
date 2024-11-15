@@ -19,6 +19,11 @@ namespace movieReservationSystem.Services
 
         public User Register(string username, string password)
         {
+            if (_userRepository.UsernameExists(username))
+            {
+                throw new System.Exception("Username already exists.");
+            }
+
             var user = new User { Username = username, Password = password };
             return _userRepository.AddUser(user);
         }
