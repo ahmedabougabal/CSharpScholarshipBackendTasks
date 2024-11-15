@@ -29,8 +29,15 @@ namespace movieReservationSystem.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] User user)
         {
-            var newUser = _authService.Register(user.Username, user.Password);
-            return CreatedAtAction(nameof(Login), new { id = newUser.Id }, newUser);
+            try
+            {
+                var newUser = _authService.Register(user.Username, user.Password);
+                return CreatedAtAction(nameof(Login), new { id = newUser.Id }, newUser);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
