@@ -8,6 +8,7 @@ namespace movieReservationSystem.Repositories
         List<User> GetAllUsers();
         User GetUserById(string id);
         User GetUserByUsernameAndPassword(string username, string password);
+        bool UsernameExists(string username);
         User AddUser(User user);
         User UpdateUser(User user);
         void DeleteUser(string id);
