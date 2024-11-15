@@ -1,5 +1,4 @@
 using MongoDB.Driver;
-using movieReservationSystem.Models;
 
 namespace movieReservationSystem.Utils
 {
@@ -13,8 +12,8 @@ namespace movieReservationSystem.Utils
             _database = client.GetDatabase(databaseName);
         }
 
-        public IMongoCollection<Movie> Movies => _database.GetCollection<Movie>("Movies");
-        public IMongoCollection<Reservation> Reservations => _database.GetCollection<Reservation>("Reservations");
-        public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
+        public IMongoCollection<Models.User> Users => _database.GetCollection<Models.User>("Users");
+        public IMongoCollection<Models.Movie> Movies => _database.GetCollection<Models.Movie>("Movies");
+        public IMongoCollection<Models.Reservation> Reservations => _database.GetCollection<Models.Reservation>("Reservations");
     }
 }
