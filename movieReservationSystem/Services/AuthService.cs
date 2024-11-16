@@ -12,9 +12,14 @@ namespace movieReservationSystem.Services
             _userRepository = userRepository;
         }
 
-        public User Authenticate(string username, string password)
+        public User? Authenticate(string username, string password)
         {
-            return _userRepository.GetUserByUsernameAndPassword(username, password);
+            var user = _userRepository.GetUserByUsername(username);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            {
+                return null;
+            }
+            return user;
         }
 
         public User Register(string username, string password)
@@ -24,7 +29,8 @@ namespace movieReservationSystem.Services
                 throw new System.Exception("Username already exists.");
             }
 
-            var user = new User { Username = username, Password = password };
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+            var user = new User { Username = username, PasswordHash = passwordHash };
             return _userRepository.AddUser(user);
         }
     }
