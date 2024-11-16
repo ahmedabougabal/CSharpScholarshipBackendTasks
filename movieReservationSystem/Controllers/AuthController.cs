@@ -18,7 +18,7 @@ namespace movieReservationSystem.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] User user)
         {
-            var authenticatedUser = _authService.Authenticate(user.Username, user.Password);
+            var authenticatedUser = _authService.Authenticate(user.Username, user.PasswordHash);
             if (authenticatedUser == null)
             {
                 return Unauthorized();
@@ -31,7 +31,7 @@ namespace movieReservationSystem.Controllers
         {
             try
             {
-                var newUser = _authService.Register(user.Username, user.Password);
+                var newUser = _authService.Register(user.Username, user.PasswordHash);
                 return CreatedAtAction(nameof(Login), new { id = newUser.Id }, newUser);
             }
             catch (System.Exception ex)
