@@ -16,3 +16,7 @@
 **_this is the registration endpoint_**
 
 ![image](https://github.com/user-attachments/assets/9b7b0c57-f2bf-42b7-afb8-0698f4c8900b)
+
+**_this is the login endpoint after works finally after several debugging hours _**
+
+![image](https://github.com/user-attachments/assets/e286a367-7fcb-4528-8723-37838709dfc0)
