@@ -9,26 +9,29 @@ namespace eCommerce.Data
     {
         private readonly IMongoDatabase _database;
         private readonly ILogger<MongoContext> _logger;
+        private readonly IMongoCollection<Product> _products;
 
         public MongoContext(IConfiguration configuration, ILogger<MongoContext> logger)
         {
             _logger = logger;
             try
             {
-                var connectionString = configuration["MongoConnection"];
+                var connectionString = configuration.GetConnectionString("MongoConnection");
                 _logger.LogInformation("Attempting to connect to MongoDB");
 
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    _logger.LogError("MongoDB connection string is not configured");
-                    throw new InvalidOperationException("MongoDB connection string is not configured");
+                    connectionString = "mongodb://localhost:27017";
+                    _logger.LogWarning("MongoDB connection string not found in configuration, using default: {ConnectionString}", connectionString);
                 }
                 
                 var client = new MongoClient(connectionString);
                 _database = client.GetDatabase("eCommerce");
+                _products = _database.GetCollection<Product>("Products");
                 
-                // Test the connection
-                _database.RunCommandAsync((Command<MongoDB.Bson.BsonDocument>)"{ping:1}").Wait();
+                // Ensure indexes
+                CreateIndexes();
+                
                 _logger.LogInformation("Successfully connected to MongoDB");
             }
             catch (Exception ex)
@@ -38,6 +41,21 @@ namespace eCommerce.Data
             }
         }
 
-        public IMongoDatabase Database => _database;
+        private void CreateIndexes()
+        {
+            try
+            {
+                var indexKeysDefinition = Builders<Product>.IndexKeys.Ascending(p => p.Name);
+                var createIndexOptions = new CreateIndexOptions { Unique = false };
+                var createIndexModel = new CreateIndexModel<Product>(indexKeysDefinition, createIndexOptions);
+                _products.Indexes.CreateOne(createIndexModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating indexes");
+            }
+        }
+
+        public IMongoCollection<Product> Products => _products;
     }
 }
