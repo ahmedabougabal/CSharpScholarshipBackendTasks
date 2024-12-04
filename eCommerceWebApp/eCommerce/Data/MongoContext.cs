@@ -10,6 +10,7 @@ namespace eCommerce.Data
         private readonly IMongoDatabase _database;
         private readonly ILogger<MongoContext> _logger;
         private readonly IMongoCollection<Product> _products;
+        private readonly IMongoCollection<Order> _orders;
 
         public MongoContext(IConfiguration configuration, ILogger<MongoContext> logger)
         {
@@ -28,6 +29,7 @@ namespace eCommerce.Data
                 var client = new MongoClient(connectionString);
                 _database = client.GetDatabase("eCommerce");
                 _products = _database.GetCollection<Product>("Products");
+                _orders = _database.GetCollection<Order>("Orders");
                 
                 // Ensure indexes
                 CreateIndexes();
@@ -57,5 +59,6 @@ namespace eCommerce.Data
         }
 
         public IMongoCollection<Product> Products => _products;
+        public IMongoCollection<Order> Orders => _orders;
     }
 }
