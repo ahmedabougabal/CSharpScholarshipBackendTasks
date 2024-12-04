@@ -39,14 +39,33 @@ namespace eCommerce.Controllers
             var user = new AppUser
             {
                 UserName = model.UserName,
-                Email = model.Email
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Address = model.Address,
+                PhoneNumber = model.PhoneNumber,
+                CreatedAt = DateTime.UtcNow,
+                LastLoginAt = DateTime.UtcNow
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                return Ok(new { message = "Registration successful" });
+                // Update LastLoginAt on first login
+                user.LastLoginAt = DateTime.UtcNow;
+                await _userManager.UpdateAsync(user);
+
+                // Generate JWT token for immediate login
+                var token = GenerateJwtToken(user);
+                
+                return Ok(new { 
+                    message = "Registration successful",
+                    token = token,
+                    userId = user.Id,
+                    email = user.Email,
+                    userName = user.UserName
+                });
             }
 
             foreach (var error in result.Errors)
@@ -63,13 +82,19 @@ namespace eCommerce.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+            // First find the user by email
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return Unauthorized(new { message = "Invalid login attempt" });
+
+            // Use the username for sign in
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
-                    return Unauthorized(new { message = "User not found" });
+                // Update LastLoginAt timestamp
+                user.LastLoginAt = DateTime.UtcNow;
+                await _userManager.UpdateAsync(user);
 
                 var token = GenerateJwtToken(user);
                 return Ok(new { token });
