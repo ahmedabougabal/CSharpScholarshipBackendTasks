@@ -45,7 +45,7 @@ namespace eCommerce.Controllers
             try
             {
                 _logger.LogInformation("Retrieving product with ID: {Id}", id);
-                var product = await _context.Products.Find(p => p.Id.ToString() == id).FirstOrDefaultAsync();
+                var product = await _context.Products.Find(p => p.Id != null && p.Id.ToString() == id).FirstOrDefaultAsync();
 
                 if (product == null)
                 {
@@ -66,9 +66,18 @@ namespace eCommerce.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
                 _logger.LogInformation("Creating new product: {ProductDetails}", JsonSerializer.Serialize(product));
+                
+                // Ensure the ID is null for new products
+                product.Id = null;
+                
                 await _context.Products.InsertOneAsync(product);
                 _logger.LogInformation("Product created successfully with ID: {Id}", product.Id);
                 return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
@@ -87,7 +96,7 @@ namespace eCommerce.Controllers
             try
             {
                 _logger.LogInformation("Updating product with ID: {Id}", id);
-                var result = await _context.Products.ReplaceOneAsync(p => p.Id.ToString() == id, product);
+                var result = await _context.Products.ReplaceOneAsync(p => p.Id != null && p.Id.ToString() == id, product);
 
                 if (result.ModifiedCount == 0)
                 {
@@ -112,7 +121,7 @@ namespace eCommerce.Controllers
             try
             {
                 _logger.LogInformation("Deleting product with ID: {Id}", id);
-                var result = await _context.Products.DeleteOneAsync(p => p.Id.ToString() == id);
+                var result = await _context.Products.DeleteOneAsync(p => p.Id != null && p.Id.ToString() == id);
 
                 if (result.DeletedCount == 0)
                 {
