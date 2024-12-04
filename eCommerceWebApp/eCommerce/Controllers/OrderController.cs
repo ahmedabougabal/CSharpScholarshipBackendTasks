@@ -33,7 +33,7 @@ namespace eCommerce.Controllers
             if (user == null)
                 return Unauthorized();
 
-            var product = await _context.Products.Find(p => p.Id.ToString() == productId).FirstOrDefaultAsync();
+            var product = await _context.Products.Find(p => p.Id != null && p.Id.ToString() == productId).FirstOrDefaultAsync();
             if (product == null)
                 return NotFound(new { message = "Product not found" });
 
