@@ -45,7 +45,7 @@ namespace eCommerce.Controllers
             try
             {
                 _logger.LogInformation("Retrieving product with ID: {Id}", id);
-                var product = await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
+                var product = await _context.Products.Find(p => p.Id.ToString() == id).FirstOrDefaultAsync();
 
                 if (product == null)
                 {
@@ -87,7 +87,7 @@ namespace eCommerce.Controllers
             try
             {
                 _logger.LogInformation("Updating product with ID: {Id}", id);
-                var result = await _context.Products.ReplaceOneAsync(p => p.Id == id, product);
+                var result = await _context.Products.ReplaceOneAsync(p => p.Id.ToString() == id, product);
 
                 if (result.ModifiedCount == 0)
                 {
@@ -112,7 +112,7 @@ namespace eCommerce.Controllers
             try
             {
                 _logger.LogInformation("Deleting product with ID: {Id}", id);
-                var result = await _context.Products.DeleteOneAsync(p => p.Id == id);
+                var result = await _context.Products.DeleteOneAsync(p => p.Id.ToString() == id);
 
                 if (result.DeletedCount == 0)
                 {
