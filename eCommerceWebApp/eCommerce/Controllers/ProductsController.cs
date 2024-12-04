@@ -2,6 +2,7 @@ using eCommerce.Data;
 using eCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System.Text.Json;
 
 namespace eCommerce.Controllers
 {
@@ -25,146 +26,107 @@ namespace eCommerce.Controllers
         {
             try
             {
-                _logger.LogInformation("Received GET request to retrieve products");
-                var collection = _context.Database.GetCollection<Product>("Products");
-                var products = await collection.Find(_ => true).ToListAsync();
-                _logger.LogInformation("Products retrieved successfully");
+                _logger.LogInformation("Retrieving all products");
+                var products = await _context.Products.Find(_ => true).ToListAsync();
+                _logger.LogInformation("Retrieved {Count} products", products.Count);
                 return Ok(products);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving products");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
             }
         }
 
-        // GET: api/Products/5
+        // GET: api/Products/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Product>> GetProduct(string id)
         {
             try
             {
-                _logger.LogInformation("Received GET request to retrieve product: {Id}", id);
-                var collection = _context.Database.GetCollection<Product>("Products");
-                var product = await collection.Find(p => p.Id == id).FirstOrDefaultAsync();
-                
+                _logger.LogInformation("Retrieving product with ID: {Id}", id);
+                var product = await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
+
                 if (product == null)
                 {
-                    _logger.LogInformation("Product not found: {Id}", id);
-                    return NotFound();
+                    _logger.LogWarning("Product not found with ID: {Id}", id);
+                    return NotFound(new { message = $"Product with ID {id} not found" });
                 }
 
-                _logger.LogInformation("Product retrieved successfully: {Id}", id);
                 return Ok(product);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving product {Id}", id);
-                return StatusCode(500, "Internal server error");
+                _logger.LogError(ex, "Error retrieving product with ID: {Id}", id);
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
             }
-        }
-
-        // Test endpoint
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            return Ok("Test endpoint is working!");
         }
 
         // POST: api/Products
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
-            _logger.LogInformation("Received POST request to create product: {@Product}", product);
-
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogWarning("Invalid model state");
-                    return BadRequest(ModelState);
-                }
-
-                if (product.Id == 0)
-                {
-                    product.Id = new Random().Next(1, 100000);
-                    _logger.LogInformation("Generated new product ID: {Id}", product.Id);
-                }
-
-                var collection = _context.Database.GetCollection<Product>("Products");
-                _logger.LogInformation("Attempting to insert product into database");
-                await collection.InsertOneAsync(product);
-                
-                _logger.LogInformation("Product created successfully: {Id}", product.Id);
+                _logger.LogInformation("Creating new product: {ProductDetails}", JsonSerializer.Serialize(product));
+                await _context.Products.InsertOneAsync(product);
+                _logger.LogInformation("Product created successfully with ID: {Id}", product.Id);
                 return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
-            }
-            catch (MongoWriteException ex) when (ex.WriteError?.Category == ServerErrorCategory.DuplicateKey)
-            {
-                _logger.LogWarning("Duplicate product ID: {Id}", product.Id);
-                return BadRequest($"A product with ID {product.Id} already exists.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating product");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
             }
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Products/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromBody] Product product)
+        public async Task<IActionResult> UpdateProduct(string id, [FromBody] Product product)
         {
             try
             {
-                _logger.LogInformation("Received PUT request to update product: {Id}", id);
-                if (id != product.Id)
-                {
-                    _logger.LogWarning("Invalid product ID");
-                    return BadRequest();
-                }
-
-                var collection = _context.Database.GetCollection<Product>("Products");
-                var result = await collection.ReplaceOneAsync(p => p.Id == id, product);
+                _logger.LogInformation("Updating product with ID: {Id}", id);
+                var result = await _context.Products.ReplaceOneAsync(p => p.Id == id, product);
 
                 if (result.ModifiedCount == 0)
                 {
-                    _logger.LogInformation("Product not found: {Id}", id);
-                    return NotFound();
+                    _logger.LogWarning("Product not found with ID: {Id}", id);
+                    return NotFound(new { message = $"Product with ID {id} not found" });
                 }
 
-                _logger.LogInformation("Product updated successfully: {Id}", id);
+                _logger.LogInformation("Product updated successfully");
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating product {Id}", id);
-                return StatusCode(500, "Internal server error");
+                _logger.LogError(ex, "Error updating product with ID: {Id}", id);
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
             }
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Products/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(string id)
         {
             try
             {
-                _logger.LogInformation("Received DELETE request to delete product: {Id}", id);
-                var collection = _context.Database.GetCollection<Product>("Products");
-                var result = await collection.DeleteOneAsync(p => p.Id == id);
+                _logger.LogInformation("Deleting product with ID: {Id}", id);
+                var result = await _context.Products.DeleteOneAsync(p => p.Id == id);
 
                 if (result.DeletedCount == 0)
                 {
-                    _logger.LogInformation("Product not found: {Id}", id);
-                    return NotFound();
+                    _logger.LogWarning("Product not found with ID: {Id}", id);
+                    return NotFound(new { message = $"Product with ID {id} not found" });
                 }
 
-                _logger.LogInformation("Product deleted successfully: {Id}", id);
+                _logger.LogInformation("Product deleted successfully");
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting product {Id}", id);
-                return StatusCode(500, "Internal server error");
+                _logger.LogError(ex, "Error deleting product with ID: {Id}", id);
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
             }
         }
     }
