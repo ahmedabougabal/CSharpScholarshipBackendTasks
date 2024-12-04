@@ -56,7 +56,8 @@ namespace eCommerce
             {
                 MongoDbSettings = new MongoDbSettings
                 {
-                    ConnectionString = builder.Configuration.GetConnectionString("MongoDb"),
+                    ConnectionString = builder.Configuration.GetConnectionString("MongoConnection") ?? 
+                        throw new InvalidOperationException("MongoDB connection string not found"),
                     DatabaseName = "eCommerceIdentity"
                 },
                 IdentityOptionsAction = options =>
