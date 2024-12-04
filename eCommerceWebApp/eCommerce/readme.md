@@ -11,3 +11,8 @@
 **_this is the delete a product using an id endpoint_**
 
 ![image](https://github.com/user-attachments/assets/d88774be-470d-4d28-8cb1-62c23cf8c1cf)
+
+
+**_this is the registration endpoint_**
+
+![image](https://github.com/user-attachments/assets/9b7b0c57-f2bf-42b7-afb8-0698f4c8900b)
