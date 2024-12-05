@@ -51,6 +51,16 @@ namespace eCommerce
                 });
             });
 
+            // Configure PaymentSettings
+            builder.Services.Configure<PaymentSettings>(
+                builder.Configuration.GetSection("PaymentSettings"));
+
+            // Register HttpClient
+            builder.Services.AddHttpClient();
+
+            // Register PaymentService
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+
             // Configure MongoDB for Identity
             var mongoDbIdentityConfig = new MongoDbIdentityConfiguration
             {
