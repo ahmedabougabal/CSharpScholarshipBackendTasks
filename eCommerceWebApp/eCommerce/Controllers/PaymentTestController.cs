@@ -22,7 +22,7 @@ namespace eCommerce.Controllers
             {
                 // Create a payment intention with test data
                 var paymentToken = await _paymentService.CreatePaymentIntention(
-                    amount: 100.0m,  // 100 EGP
+                    amount: 123.45m,  // Specific amount for easy identification
                     currency: "EGP",
                     customerEmail: "test@example.com",
                     customerFirstName: "Test",
