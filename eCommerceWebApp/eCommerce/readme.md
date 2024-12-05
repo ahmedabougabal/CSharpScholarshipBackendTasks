@@ -4,9 +4,9 @@
 
 ![image](https://github.com/user-attachments/assets/9f38e098-b7db-4d0d-8c60-5476b13192f3)
 
-**_this is the first POST endpoint_**
+**_this is the addProduct-POST endpoint_**
 
-![image](https://github.com/user-attachments/assets/3a501250-2ae2-4991-a09d-5946e4ffe1d5)
+![image](https://github.com/user-attachments/assets/9068c8a0-a3df-4fa4-a883-8e63cb256dbb)
 
 **_this is the delete a product using an id endpoint_**
 
@@ -20,3 +20,9 @@
 **_this is the login endpoint after works finally after several debugging hours _**
 
 ![image](https://github.com/user-attachments/assets/e286a367-7fcb-4528-8723-37838709dfc0)
+
+
+**_this is the PayMob payment integration endpoint_**
+
+![image](https://github.com/user-attachments/assets/061f23de-14d8-48fe-a93b-408bf4b95b5a)
+
