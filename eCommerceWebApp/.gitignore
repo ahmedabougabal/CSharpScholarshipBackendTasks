@@ -1,0 +1,22 @@
+# .NET Core
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Development settings
+**/appsettings.Development.json
+**/appsettings.*.json
+!appsettings.json
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
